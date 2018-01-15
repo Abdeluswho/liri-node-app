@@ -104,7 +104,7 @@ function movie(){
   // If the request is successful (i.e. if the response status code is 200)
   if (!error && response.statusCode === 200) {
   // Parse the body of the site and recover just the imdbRating
-  console.log("---------------------------------------------");
+    console.log("---------------------------------------------");
     console.log("Results for: "+JSON.parse(body).Title);
     console.log("Released in: "+JSON.parse(body).Released);
 
@@ -143,8 +143,17 @@ function dothis(){
 });
 }
 
-
-
+// //Have a copy fo the console in a seperate file
+// function save(){
+//   fs.writeFile("log.txt", ??, function(err) {
+//   // If the code experiences any errors it will log the error to the console.
+//   if (err) {
+//     return console.log(err);
+//   }
+//   // Otherwise, it will print: 
+//   console.log("log.txt was updated!");
+// });
+// }
 
 
 
