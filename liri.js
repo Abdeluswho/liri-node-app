@@ -28,7 +28,7 @@ console.log(value);
 
 
 switch (command) {
-    case "my-tweets":
+   case "my-tweets":
       tweets();
       break;
   
@@ -42,10 +42,15 @@ switch (command) {
       break;
   
    case "movie-this":
-      movie();
+      if (!value) {
+        //--------
+        value = 'Mr.Nobody';
+          movie();
+        }
       break;
   
    case "do-what-it-says":
+
       	dothis();
       break;
   }
@@ -92,5 +97,57 @@ function spotify(){
 		
 	});
 }
+
+function movie(){
+  request("http://www.omdbapi.com/?t=" + value + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
+
+  // If the request is successful (i.e. if the response status code is 200)
+  if (!error && response.statusCode === 200) {
+  // Parse the body of the site and recover just the imdbRating
+  console.log("---------------------------------------------");
+    console.log("Results for: "+JSON.parse(body).Title);
+    console.log("Released in: "+JSON.parse(body).Released);
+
+    if (JSON.parse(body).Ratings[1]) {
+      console.log("Rotten Tomatoes: "+JSON.parse(body).Ratings[1].Value);
+    }else{
+      console.log("Rated: "+JSON.parse(body).Ratings[0].Value);
+    };
+    
+    console.log("Produced in: "+JSON.parse(body).Country);
+    console.log("Language: "+JSON.parse(body).Language+"\n");
+    console.log("*******************************************");
+    console.log("Plot: \n"+JSON.parse(body).Plot);
+    console.log("Actors: "+JSON.parse(body).Actors+"\n");
+    console.log("*******************************************");
+    // console.log(JSON.parse(body));
+
+  }
+});
+}
+
+function dothis(){
+  fs.readFile("random.txt", "utf8", function(error, data) {
+  // If the code experiences any errors it will log the error to the console.
+  if (error) {
+    return console.log(error);
+  }
+  // We will then print the contents of data
+  console.log(data+"@Loading....");
+  // Then split it by commas (to make it more readable)
+  var dataArr = data.split(",");
+  // We will then re-display the content as an array for later use.
+  value = dataArr[1];
+  spotify();
+  
+});
+}
+
+
+
+
+
+
+
 
 
