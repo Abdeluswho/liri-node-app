@@ -48,6 +48,8 @@ switch (command) {
         //--------
         value = 'Mr.Nobody';
           movie();
+        }else{
+          movie();
         }
       break;
   
@@ -82,7 +84,7 @@ function spotify(){
 		 
 		 for (var i = 0; i < data.tracks.items.length; i++) {
 
-      class obj {
+      class songBody {
         constructor(song, album, artist, URL, URI){
           this.song = song;
           this.album = album;
@@ -92,7 +94,7 @@ function spotify(){
         }
       }
 
-       datatoSave  = new obj(data.tracks.items[i].name, data.tracks.items[i].album.name, data.tracks.items[i].artists[0].name, data.tracks.items[i].preview_url, data.tracks.items[i].uri);
+       datatoSave  = new songBody(data.tracks.items[i].name, data.tracks.items[i].album.name, data.tracks.items[i].artists[0].name, data.tracks.items[i].preview_url, data.tracks.items[i].uri);
 		 	  console.log(datatoSave);
         save(JSON.stringify(datatoSave));
       // data.tracks.items[i];
@@ -119,6 +121,29 @@ function movie(){
   // If the request is successful (i.e. if the response status code is 200)
   if (!error && response.statusCode === 200) {
   // Parse the body of the site and recover just the imdbRating
+     class Movie {
+        constructor(title, released, rate, country, language, plot, actors ){
+          this.title = title;
+          this.released = released;
+          this.rate = rate;
+          this.country = country;
+          this.language = language;
+          this.plot = plot;
+          this.actors = actors;
+        }
+      }
+
+      datatoSave = new Movie(JSON.parse(body).Title, 
+                        JSON.parse(body).Released, 
+                        JSON.parse(body).Ratings[1].Value, 
+                        JSON.parse(body).Country, 
+                        JSON.parse(body).Language, 
+                        JSON.parse(body).Plot, 
+                        JSON.parse(body).Actors);
+      console.log(datatoSave);
+      save(JSON.stringify(datatoSave));
+     
+
     console.log("---------------------------------------------");
     console.log("Results for: "+JSON.parse(body).Title);
     console.log("Released in: "+JSON.parse(body).Released);
@@ -168,7 +193,7 @@ function save(data){
   // Otherwise, it will print: 
   
 });
-  console.log("log.txt was updated!");
+  console.log("***--Database updated!--***");
 }
 
 
