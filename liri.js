@@ -121,7 +121,7 @@ function movie(){
   // If the request is successful (i.e. if the response status code is 200)
   if (!error && response.statusCode === 200) {
   // Parse the body of the site and recover just the imdbRating
-     class Movie {
+     class MovieBody {
         constructor(title, released, rate, country, language, plot, actors ){
           this.title = title;
           this.released = released;
@@ -133,7 +133,7 @@ function movie(){
         }
       }
 
-      datatoSave = new Movie(JSON.parse(body).Title, 
+      datatoSave = new MovieBody(JSON.parse(body).Title, 
                         JSON.parse(body).Released, 
                         JSON.parse(body).Ratings[1].Value, 
                         JSON.parse(body).Country, 
