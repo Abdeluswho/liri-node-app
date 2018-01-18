@@ -18,6 +18,7 @@ let client = new Twitter(keys.twitter);
 let command = process.argv[2];
 let action = process.argv;
 let value = "";
+let datatoSave ={};
 //saving data in an array for later access-----------
 for (let i = 3; i < action.length; i++) {
 	value = value + " " + action[i];
@@ -38,6 +39,7 @@ switch (command) {
      	console.log("--------------------------------------\nSong: The Sign \nAlbum: The Sign (US Album) [Remastered]\nArtist: Ace of Base\nURL: https://p.scdn.co/mp3-preview/4c463359f67dd3546db7294d236dd0ae991882ff?cid=51af4d758a4a4e64a8f5909b8e6cad93\nURI: spotify:track:0hrBpAOgrt8RXigk83LLNE\n--------------------------------")
      }else{
       spotify();
+
   	 }
       break;
   
@@ -80,7 +82,20 @@ function spotify(){
 		 
 		 for (var i = 0; i < data.tracks.items.length; i++) {
 
-		 	// data.tracks.items[i];
+      class obj {
+        constructor(song, album, artist, URL, URI){
+          this.song = song;
+          this.album = album;
+          this.artist = artist;
+          this.URL = URL;
+          this.URI = URI;
+        }
+      }
+
+       datatoSave  = new obj(data.tracks.items[i].name, data.tracks.items[i].album.name, data.tracks.items[i].artists[0].name, data.tracks.items[i].preview_url, data.tracks.items[i].uri);
+		 	  console.log(datatoSave);
+        save(JSON.stringify(datatoSave));
+      // data.tracks.items[i];
 			 	console.log("--------------------------------------\n");
 			 	console.log("Song: "+data.tracks.items[i].name); 
 			 	console.log("Album: "+ data.tracks.items[i].album.name);
@@ -143,17 +158,18 @@ function dothis(){
 });
 }
 
-// //Have a copy fo the console in a seperate file
-// function save(){
-//   fs.writeFile("log.txt", ??, function(err) {
-//   // If the code experiences any errors it will log the error to the console.
-//   if (err) {
-//     return console.log(err);
-//   }
-//   // Otherwise, it will print: 
-//   console.log("log.txt was updated!");
-// });
-// }
+//Have a copy fo the console in a seperate file
+function save(data){
+  fs.appendFile("log.txt", data, function(err) {
+  // If the code experiences any errors it will log the error to the console.
+  if (err) {
+    return console.log(err);
+  }
+  // Otherwise, it will print: 
+  
+});
+  console.log("log.txt was updated!");
+}
 
 
 
